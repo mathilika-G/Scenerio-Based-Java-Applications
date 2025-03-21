@@ -1,0 +1,96 @@
+package pro4;
+import java.util.Scanner;
+
+public class InsuranceCalculator {
+    // Method to calculate the insurance premium
+    public double calculatePremium(int age, String vehicleType, boolean hasMedicalHistory, String coveragePlan) {
+        double basePremium = 1000; // Base premium amount
+        double ageFactor = 1.0, vehicleFactor = 1.0, medicalFactor = 1.0, coverageFactor = 1.0;
+        
+        // Determine age factor
+        if (age < 25)
+            ageFactor = 1.5;
+        else if (age <= 45)
+            ageFactor = 1.2;
+        else if (age <= 60)
+            ageFactor = 1.4;
+        else
+            ageFactor = 1.8;
+        
+        // Determine vehicle type factor
+        switch (vehicleType.toLowerCase()) {
+            case "car":
+                vehicleFactor = 1.3;
+                break;
+            case "bike":
+                vehicleFactor = 1.1;
+                break;
+            case "truck":
+                vehicleFactor = 1.5;
+                break;
+            default:
+                vehicleFactor = 1.2;
+        }
+        
+        // Determine medical history factor
+        if (hasMedicalHistory)
+            medicalFactor = 1.4;
+        
+        // Determine coverage plan factor
+        switch (coveragePlan.toLowerCase()) {
+            case "basic":
+                coverageFactor = 1.1;
+                break;
+            case "standard":
+                coverageFactor = 1.3;
+                break;
+            case "premium":
+                coverageFactor = 1.6;
+                break;
+            default:
+                coverageFactor = 1.2;
+        }
+        
+        // Calculate final premium amount
+        double finalPremium = basePremium * ageFactor * vehicleFactor * medicalFactor * coverageFactor;
+        
+        // Display premium calculation details
+        System.out.println("=== Premium Calculation Details ===");
+        System.out.println("Base Premium: Rs." + basePremium);
+        System.out.println("Age Factor: " + ageFactor);
+        System.out.println("Vehicle Type Factor: " + vehicleFactor);
+        System.out.println("Medical History Factor: " + medicalFactor);
+        System.out.println("Coverage Plan Factor: " + coverageFactor);
+        System.out.println("Final Premium Amount: Rs." + finalPremium);
+        
+        return finalPremium;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Get user input for insurance premium calculation
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        
+        System.out.print("Enter your vehicle type (car, bike, truck): ");
+        String vehicleType = scanner.nextLine();
+        
+        System.out.print("Do you have a medical history? (true/false): ");
+        boolean hasMedicalHistory = scanner.nextBoolean();
+        scanner.nextLine();
+        
+        System.out.print("Enter your coverage plan (basic, standard, premium): ");
+        String coveragePlan = scanner.nextLine();
+        
+        // Create an instance of InsuranceCalculator and calculate premium
+        InsuranceCalculator calculator = new InsuranceCalculator();
+        double premium = calculator.calculatePremium(age, vehicleType, hasMedicalHistory, coveragePlan);
+        
+        // Display final calculated premium
+        System.out.println("\nFinal Calculated Premium: Rs." + premium);
+        
+        scanner.close();
+    }
+}
